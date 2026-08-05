@@ -8,7 +8,15 @@ VALUES (
     TIMESTAMP '2026-01-01 10:00:00',
     TRUE,
     'ADMIN'
-);
+),
+    (
+       'karolek123',
+       '$2a$12$yX.77.7GGTSBEkDQDaPi4eIUFDvQ3bGH9tF9p55FX1rLBYZGMPsxq',
+       'karolek123@student.wszib.edu.pl',
+       TIMESTAMP '2026-01-01 11:00:00',
+       TRUE,
+       'USER'
+   );
 
 INSERT INTO quizzes (title, code, create_time, duration_time, eliminations_count, multiple_choice, active, user_id)
 VALUES (
@@ -31,4 +39,4 @@ VALUES
     ('blue', TRUE, 1);
 
 INSERT INTO attempts (user_id, quiz_id, score, attempt_time)
-VALUES (1, 1, 60, TIMESTAMP '2026-01-01 12:00:00');
+VALUES (1, 1, 100, TIMESTAMP '2026-01-01 12:00:00');
