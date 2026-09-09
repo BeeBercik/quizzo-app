@@ -19,6 +19,7 @@ VALUES (
    );
 
 INSERT INTO quizzes (title, code, create_time, duration_time, eliminations_count, multiple_choice, active, user_id)
+
 VALUES (
     'Quiz about animals',
     'ANM26',

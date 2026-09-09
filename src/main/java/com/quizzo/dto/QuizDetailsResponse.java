@@ -8,7 +8,7 @@ public record QuizDetailsResponse(Integer id,
                                   String title,
                                   String code,
                                   LocalDateTime createTime,
-                                  Float durationTime,
+                                  Integer durationTime,
                                   Integer eliminationsCount,
                                   Boolean multipleChoice,
                                   List<QuestionResponse> questions) {

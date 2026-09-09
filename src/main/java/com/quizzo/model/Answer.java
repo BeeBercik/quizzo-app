@@ -1,18 +1,18 @@
 package com.quizzo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.quizzo.dto.QuizData;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "answers")
 public class Answer {
-    public static final int VALUE_MAX_LENGTH = 70;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = VALUE_MAX_LENGTH, nullable = false)
+    @Column(length = QuizData.MAX_ANSWER_LENGTH, nullable = false)
     private String value;
 
     @Column(nullable = false)

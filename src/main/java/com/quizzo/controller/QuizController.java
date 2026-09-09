@@ -3,6 +3,7 @@ package com.quizzo.controller;
 import com.quizzo.config.AppUserPrincipal;
 import com.quizzo.dto.*;
 import com.quizzo.service.QuizService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -43,7 +44,7 @@ public class QuizController {
     }
 
     @PostMapping
-    ResponseEntity<?> createQuiz(@RequestBody CreatedQuizRequest createdQuiz, @AuthenticationPrincipal AppUserPrincipal user) {
+    ResponseEntity<?> createQuiz(@Valid @RequestBody CreatedQuizRequest createdQuiz, @AuthenticationPrincipal AppUserPrincipal user) {
         quizService.saveQuiz(createdQuiz, user.getId());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -52,7 +53,7 @@ public class QuizController {
 
     @PutMapping("/{code}")
     ResponseEntity<?> updateQuiz(@PathVariable(name = "code") String code,
-                                 @RequestBody CreatedQuizRequest updatedQuiz,
+                                 @Valid @RequestBody CreatedQuizRequest updatedQuiz,
                                  @AuthenticationPrincipal AppUserPrincipal user) {
         quizService.updateQuiz(code, updatedQuiz, user.getId());
         return ResponseEntity

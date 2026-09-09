@@ -36,7 +36,7 @@ export default function initCreateEditTestView(mode = "create", code = null) {
 
         <div class="option">
           <label for="duration">Time duration [min]</label>
-          <input type="number" id="duration" min="1" max="300" step="0.5">
+          <input type="number" id="duration" min="1" max="300" step="1">
         </div>
       </section>
 

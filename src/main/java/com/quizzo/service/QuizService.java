@@ -4,7 +4,7 @@ import com.quizzo.dto.*;
 import com.quizzo.exception.*;
 import com.quizzo.model.*;
 import com.quizzo.repository.*;
-import com.quizzo.validators.QuizDataValidator;
+import com.quizzo.validators.QuizAnswersCountValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,7 +60,7 @@ public class QuizService {
 
     @Transactional
     public void saveQuiz(CreatedQuizRequest createdQuiz, Integer userId) {
-        QuizDataValidator.validateQuizData(createdQuiz);
+        QuizAnswersCountValidator.validateQuizAnswersCount(createdQuiz);
         Quiz quiz = new Quiz();
 
         quiz.setTitle(capitalizeFirstLetter(createdQuiz.title()));
@@ -68,7 +68,7 @@ public class QuizService {
         quiz.setCreateTime(LocalDateTime.now());
         quiz.setActive(true);
 
-        quiz.setDurationTime(Float.parseFloat(createdQuiz.time()));
+        quiz.setDurationTime(createdQuiz.time());
         quiz.setEliminationsCount(createdQuiz.eliminations());
         quiz.setMultipleChoice(createdQuiz.multipleChoice());
         quiz.setQuestions(buildQuestions(createdQuiz.questionsData(), quiz));
@@ -128,11 +128,11 @@ public class QuizService {
 
     @Transactional
     public void updateQuiz(String code, CreatedQuizRequest updatedQuiz, Integer userId) {
-        QuizDataValidator.validateQuizData(updatedQuiz);
+        QuizAnswersCountValidator.validateQuizAnswersCount(updatedQuiz);
         Quiz quiz = getSpecificUserQuiz(code, userId);
 
         quiz.setTitle(capitalizeFirstLetter(updatedQuiz.title()));
-        quiz.setDurationTime(Float.parseFloat(updatedQuiz.time()));
+        quiz.setDurationTime(updatedQuiz.time());
         quiz.setEliminationsCount(updatedQuiz.eliminations());
         quiz.setMultipleChoice(updatedQuiz.multipleChoice());
 
@@ -260,9 +260,9 @@ public class QuizService {
         String code;
 
         do {
-            StringBuilder generatedCode = new StringBuilder(Quiz.CODE_LENGTH);
+            StringBuilder generatedCode = new StringBuilder(QuizData.CODE_LENGTH);
 
-            for (int i = 0; i < Quiz.CODE_LENGTH; i++) {
+            for (int i = 0; i < QuizData.CODE_LENGTH; i++) {
                 char r = positions.charAt(new Random().nextInt(positions.length()));
                 generatedCode.append(r);
             }

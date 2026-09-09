@@ -1,6 +1,7 @@
 package com.quizzo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.quizzo.dto.QuizData;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -10,24 +11,22 @@ import java.util.List;
 @Entity
 @Table(name = "quizzes")
 public class Quiz {
-    public static final int TITLE_MAX_LENGTH = 40;
-    public static final int CODE_LENGTH = 5;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = TITLE_MAX_LENGTH, nullable = false)
+    @Column(length = QuizData.MAX_TITLE_LENGTH, nullable = false)
     private String title;
 
-    @Column(length = CODE_LENGTH, nullable = false, unique = true)
+    @Column(length = QuizData.CODE_LENGTH, nullable = false, unique = true)
     private String code;
 
     @Column(nullable = false)
     private LocalDateTime createTime;
 
     @Column(nullable = false)
-    private Float durationTime;
+    private Integer durationTime;
 
     @Column(nullable = false)
     private Integer eliminationsCount;
@@ -102,11 +101,11 @@ public class Quiz {
         this.title = title;
     }
 
-    public Float getDurationTime() {
+    public Integer getDurationTime() {
         return durationTime;
     }
 
-    public void setDurationTime(Float durationTime) {
+    public void setDurationTime(Integer durationTime) {
         this.durationTime = durationTime;
     }
 
