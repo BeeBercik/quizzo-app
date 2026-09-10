@@ -62,7 +62,7 @@ public class QuizController {
     }
 
     @PostMapping("/submit")
-    ResponseEntity<?> submitQuiz(@RequestBody AttemptRequest attemptRequest, @AuthenticationPrincipal AppUserPrincipal user) {
+    ResponseEntity<?> submitQuiz(@Valid @RequestBody AttemptRequest attemptRequest, @AuthenticationPrincipal AppUserPrincipal user) {
         quizService.submitQuizAttempt(attemptRequest, user.getId());
         return ResponseEntity
                 .status(HttpStatus.OK)

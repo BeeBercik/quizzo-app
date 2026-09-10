@@ -91,7 +91,7 @@ public class QuizService {
         attemptEntity.setUser(user);
 
         List<SubmittedAnswerRequest> submittedAnswers = attempt.answers();
-        if (submittedAnswers == null || submittedAnswers.isEmpty()) {
+        if (submittedAnswers.isEmpty()) {
             attemptEntity.setScore(0);
             attemptRepository.save(attemptEntity);
             return;
@@ -102,9 +102,7 @@ public class QuizService {
             Integer questionId = submittedAnswer.questionId();
 
             List<Answer> answers = questionRepository.findById(questionId).orElseThrow().getAnswers();
-            Set<Integer> selectedAnswerIds = submittedAnswer.selectedAnswerIds() == null
-                    ? Set.of()
-                    : new HashSet<>(submittedAnswer.selectedAnswerIds());
+            Set<Integer> selectedAnswerIds = new HashSet<>(submittedAnswer.selectedAnswerIds());
             Set<Integer> correctAnswerIds = answers.stream()
                     .filter(Answer::getCorrect)
                     .map(Answer::getId)

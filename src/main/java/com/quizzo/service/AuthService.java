@@ -15,12 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 @Service
 public class AuthService {
-
-    private final static Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9]+([.#+_-][a-zA-Z0-9]+)*@([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\\.)+[a-zA-Z]{2,}$");
 
     private final UserRepository userRepository;
     private final JwtService jwtService;
@@ -35,10 +32,6 @@ public class AuthService {
     }
 
     public Map<String, String> loginUser(LoginRequest request) {
-        if(request.login() == null || request.login().isBlank() ||
-                request.password() == null || request.password().isBlank())
-            throw new IncorrectLoginDataException("Login data cannot be empty or null");
-
         User user;
         try {
             authenticationManager.authenticate(
@@ -92,22 +85,6 @@ public class AuthService {
     }
 
     private void checkRegisterData(RegisterRequest request) {
-        if (request.login() == null || request.login().isBlank() ||
-                request.password() == null || request.password().isBlank() ||
-                request.email() == null || request.email().isBlank())
-            throw new IncorrectUserDataException("Incorrect register data");
-
-        if (request.login().length() < User.LOGIN_MIN_LENGTH ||
-                request.password().length() < User.PASSWORD_MIN_LENGTH)
-            throw new IncorrectUserDataException("Login must be at least 8 and password at least 10 characters long");
-
-        if (request.login().length() > User.LOGIN_MAX_LENGTH ||
-                request.password().length() > User.PASSWORD_MAX_LENGTH ||
-                request.email().length() > User.EMAIL_MAX_LENGTH)
-            throw new IncorrectUserDataException("Register data exceeds maximum length");
-
-        if(!EMAIL_PATTERN.matcher(request.email()).matches())
-            throw new IncorrectUserDataException("Invalid email format");
         if (userRepository.existsByLogin(request.login()))
             throw new LoginAlreadyTakenException("Login " + request.login() + " already taken");
         if (userRepository.existsByEmail(request.email()))

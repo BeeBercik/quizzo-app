@@ -24,7 +24,7 @@ VALUES (
     'Quiz about animals',
     'ANM26',
     TIMESTAMP '2026-01-01 11:00:00',
-    20.5,
+    20,
     3,
     FALSE,
     TRUE,

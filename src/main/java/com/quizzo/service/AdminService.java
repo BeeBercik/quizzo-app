@@ -50,9 +50,6 @@ public class AdminService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        if (roleValue == null || roleValue.isBlank())
-            throw new IncorrectUserDataException("Role cannot be empty");
-
         Role role;
         try {
             role = Role.valueOf(roleValue.trim().toUpperCase());

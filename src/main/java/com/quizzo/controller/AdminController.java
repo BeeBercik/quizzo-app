@@ -5,6 +5,7 @@ import com.quizzo.dto.AdminQuizResponse;
 import com.quizzo.dto.AdminUserResponse;
 import com.quizzo.dto.RoleUpdateRequest;
 import com.quizzo.service.AdminService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class AdminController {
     @PatchMapping("/users/{id}/role")
     ResponseEntity<?> updateUserRole(@PathVariable(name = "id") Integer userId,
                                      @AuthenticationPrincipal AppUserPrincipal user,
-                                     @RequestBody RoleUpdateRequest request) {
+                                     @Valid @RequestBody RoleUpdateRequest request) {
         adminService.updateUserRole(userId, user.getId(), request.role());
         return ResponseEntity.noContent().build();
     }

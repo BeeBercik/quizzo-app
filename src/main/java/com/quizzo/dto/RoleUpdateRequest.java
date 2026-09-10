@@ -1,4 +1,8 @@
 package com.quizzo.dto;
 
-public record RoleUpdateRequest(String role) {
+import jakarta.validation.constraints.NotBlank;
+
+public record RoleUpdateRequest(
+        @NotBlank
+        String role) {
 }

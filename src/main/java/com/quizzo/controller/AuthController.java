@@ -6,6 +6,7 @@ import com.quizzo.dto.UserProfileResponse;
 import com.quizzo.service.AuthService;
 import com.quizzo.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpServletResponse res) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request, HttpServletResponse res) {
         Map<String, String> result = authService.loginUser(request);
 
         ResponseCookie cookie = ResponseCookie.from("refresh", result.get("refresh"))
@@ -48,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         authService.registerUser(request);
         return ResponseEntity.ok().build();
     }
