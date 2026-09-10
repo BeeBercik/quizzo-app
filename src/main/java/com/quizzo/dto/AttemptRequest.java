@@ -7,10 +7,10 @@ import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 public record AttemptRequest(
-        @NotNull
-        @PositiveOrZero
+        @NotNull(message = "Quiz id cannot be empty")
+        @PositiveOrZero(message = "Quiz id cannot be negative")
         Integer quizId,
 
-        @NotNull
-        List<@Valid @NotNull SubmittedAnswerRequest> answers) {
+        @NotNull(message = "Attempt answers cannot be null")
+        List<@Valid @NotNull(message = "Submitted answer data cannot be empty") SubmittedAnswerRequest> answers) {
 }

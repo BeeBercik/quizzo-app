@@ -3,6 +3,6 @@ package com.quizzo.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public record RoleUpdateRequest(
-        @NotBlank
+        @NotBlank(message = "Role cannot be empty")
         String role) {
 }

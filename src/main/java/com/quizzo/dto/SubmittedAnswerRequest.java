@@ -7,10 +7,10 @@ import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 public record SubmittedAnswerRequest(
-        @NotNull
-        @PositiveOrZero
+        @NotNull(message = "Question id cannot be empty")
+        @PositiveOrZero(message = "Question id cannot be negative")
         Integer questionId,
 
-        @NotEmpty
-        List<@NotNull Integer> selectedAnswerIds) {
+        @NotEmpty(message = "At least one answer must be selected")
+        List<@NotNull(message = "Selected answer id cannot be empty") Integer> selectedAnswerIds) {
 }
