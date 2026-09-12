@@ -43,6 +43,7 @@ public class AdminService {
                 .toList();
     }
 
+    @AdminAudit(action = "CHANGE USER ROLE")
     public void updateUserRole(Integer userId, Integer currentUserId, String roleValue) {
         if (userId.equals(currentUserId))
             throw new IncorrectUserDataException("You cannot change your own role");
@@ -61,10 +62,12 @@ public class AdminService {
         userRepository.save(user);
     }
 
+    @AdminAudit(action = "DEACTIVATE USER")
     public void deactivateUser(Integer userId, Integer currentUserId) {
         setUserActive(userId, currentUserId, false);
     }
 
+    @AdminAudit(action = "ACTIVATE USER")
     public void activateUser(Integer userId, Integer currentUserId) {
         setUserActive(userId, currentUserId, true);
     }
@@ -80,10 +83,12 @@ public class AdminService {
         userRepository.save(user);
     }
 
+    @AdminAudit(action = "DEACTIVATE QUIZ")
     public void deactivateQuiz(String code) {
         setQuizActive(code, false);
     }
 
+    @AdminAudit(action = "ACTIVATE QUIZ")
     public void activateQuiz(String code) {
         setQuizActive(code, true);
     }
