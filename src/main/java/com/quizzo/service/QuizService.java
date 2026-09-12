@@ -4,7 +4,6 @@ import com.quizzo.dto.*;
 import com.quizzo.exception.*;
 import com.quizzo.model.*;
 import com.quizzo.repository.*;
-import com.quizzo.validators.QuizAnswersCountValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,7 +59,6 @@ public class QuizService {
 
     @Transactional
     public void saveQuiz(CreatedQuizRequest createdQuiz, Integer userId) {
-        QuizAnswersCountValidator.validateQuizAnswersCount(createdQuiz);
         Quiz quiz = new Quiz();
 
         quiz.setTitle(capitalizeFirstLetter(createdQuiz.title()));
@@ -126,7 +124,6 @@ public class QuizService {
 
     @Transactional
     public void updateQuiz(String code, CreatedQuizRequest updatedQuiz, Integer userId) {
-        QuizAnswersCountValidator.validateQuizAnswersCount(updatedQuiz);
         Quiz quiz = getSpecificUserQuiz(code, userId);
 
         quiz.setTitle(capitalizeFirstLetter(updatedQuiz.title()));

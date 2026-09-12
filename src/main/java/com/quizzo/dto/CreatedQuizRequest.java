@@ -1,10 +1,12 @@
 package com.quizzo.dto;
 
+import com.quizzo.validation.ValidQuizAnswers;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
 
+@ValidQuizAnswers
 public record CreatedQuizRequest(
         @NotBlank(message = "Quiz title cannot be empty")
         @Size(min = QuizData.MIN_TITLE_LENGTH,
