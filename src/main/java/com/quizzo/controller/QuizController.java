@@ -4,6 +4,7 @@ import com.quizzo.config.AppUserPrincipal;
 import com.quizzo.dto.*;
 import com.quizzo.service.QuizService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,14 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/quizzes")
 public class QuizController {
 
     private final QuizService quizService;
-
-    public QuizController(QuizService quizService) {
-        this.quizService = quizService;
-    }
 
     @GetMapping("/{code}")
     ResponseEntity<QuizDetailsResponse> getQuiz(@PathVariable(name = "code") String code) {

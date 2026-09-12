@@ -3,9 +3,15 @@ package com.quizzo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quizzo.dto.QuizData;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "answers")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Answer {
 
     @Id
@@ -22,41 +28,6 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
-
-    public Answer() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public Boolean getCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(Boolean correct) {
-        this.correct = correct;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
 
     @Override
     public String toString() {

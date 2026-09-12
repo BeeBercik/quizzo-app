@@ -12,6 +12,7 @@ import com.quizzo.model.Role;
 import com.quizzo.model.User;
 import com.quizzo.repository.AttemptRepository;
 import com.quizzo.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +21,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final AttemptRepository attemptRepository;
-
-    public UserService(UserRepository userRepository, AttemptRepository attemptRepository) {
-        this.userRepository = userRepository;
-        this.attemptRepository = attemptRepository;
-    }
 
     @Transactional(readOnly = true)
     public UserProfileResponse getLoggedUserProfileData(UserDetails userDetails) {

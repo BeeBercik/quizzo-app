@@ -7,6 +7,7 @@ import com.quizzo.service.AuthService;
 import com.quizzo.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,16 +20,12 @@ import java.util.Map;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class AuthController {
 
     private final UserService userService;
     private final AuthService authService;
-
-    public AuthController(UserService userService, AuthService authService) {
-        this.userService = userService;
-        this.authService = authService;
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request, HttpServletResponse res) {

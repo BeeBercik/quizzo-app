@@ -4,6 +4,7 @@ import com.quizzo.dto.*;
 import com.quizzo.exception.*;
 import com.quizzo.model.*;
 import com.quizzo.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class QuizService {
 
     private final QuizRepository quizRepository;
@@ -25,14 +27,6 @@ public class QuizService {
     private final QuestionRepository questionRepository;
     private final AttemptRepository attemptRepository;
     private final AnswerRepository answerRepository;
-
-    public QuizService(QuizRepository quizRepository, UserRepository userRepository, QuestionRepository questionRepository, AttemptRepository attemptRepository, AnswerRepository answerRepository) {
-        this.quizRepository = quizRepository;
-        this.userRepository = userRepository;
-        this.questionRepository = questionRepository;
-        this.attemptRepository = attemptRepository;
-        this.answerRepository = answerRepository;
-    }
 
     @Transactional(readOnly = true)
     public QuizDetailsResponse getQuizByCode(String code) {

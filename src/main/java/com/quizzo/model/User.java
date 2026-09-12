@@ -1,32 +1,33 @@
 package com.quizzo.model;
 
+import com.quizzo.dto.QuizData;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
-    public static final int LOGIN_MIN_LENGTH = 8;
-    public static final int LOGIN_MAX_LENGTH = 20;
-    public static final int PASSWORD_MIN_LENGTH = 10;
-    public static final int PASSWORD_MAX_LENGTH = 40;
-    public static final int PASSWORD_HASH_LENGTH = 60;
-    public static final int EMAIL_MAX_LENGTH = 40;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = LOGIN_MAX_LENGTH, nullable = false, unique = true)
+    @Column(length = QuizData.MAX_LOGIN_LENGTH, nullable = false, unique = true)
     private String login;
 
-    @Column(length = PASSWORD_HASH_LENGTH, nullable = false)
+    @Column(length = QuizData.PASSWORD_HASH_LENGTH, nullable = false)
     private String password;
 
-    @Column(length = EMAIL_MAX_LENGTH, nullable = false, unique = true)
+    @Column(length = QuizData.MAX_EMAIL_LENGTH, nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -49,9 +50,6 @@ public class User {
             orphanRemoval = true)
     private List<Attempt> attempts = new ArrayList<>();
 
-    public User() {
-    }
-
     public User(String login, String password, String email, LocalDateTime createTime, Boolean active, Role role) {
         this.login = login;
         this.password = password;
@@ -59,78 +57,6 @@ public class User {
         this.createTime = createTime;
         this.active = active;
         this.role = role;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public List<Quiz> getCreatedQuizzes() {
-        return createdQuizzes;
-    }
-
-    public void setCreatedQuizzes(List<Quiz> createdQuizzes) {
-        this.createdQuizzes = createdQuizzes;
-    }
-
-    public List<Attempt> getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(List<Attempt> attempts) {
-        this.attempts = attempts;
     }
 
     @Override

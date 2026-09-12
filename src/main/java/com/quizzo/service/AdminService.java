@@ -10,6 +10,7 @@ import com.quizzo.model.Role;
 import com.quizzo.model.User;
 import com.quizzo.repository.QuizRepository;
 import com.quizzo.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,15 +18,11 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AdminService {
 
     private final UserRepository userRepository;
     private final QuizRepository quizRepository;
-
-    public AdminService(UserRepository userRepository, QuizRepository quizRepository) {
-        this.userRepository = userRepository;
-        this.quizRepository = quizRepository;
-    }
 
     @Transactional(readOnly = true)
     public List<AdminUserResponse> getUsers() {

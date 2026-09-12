@@ -2,6 +2,9 @@ package com.quizzo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,6 +12,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "attempts")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Attempt {
 
     @Id
@@ -36,49 +42,6 @@ public class Attempt {
         this.user = user;
         this.quiz = quiz;
         this.score = score;
-        this.attemptTime = attemptTime;
-    }
-
-    public Attempt() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public LocalDateTime getAttemptTime() {
-        return attemptTime;
-    }
-
-    public void setAttemptTime(LocalDateTime attemptTime) {
         this.attemptTime = attemptTime;
     }
 

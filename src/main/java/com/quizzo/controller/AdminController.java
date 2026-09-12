@@ -6,6 +6,7 @@ import com.quizzo.dto.AdminUserResponse;
 import com.quizzo.dto.RoleUpdateRequest;
 import com.quizzo.service.AdminService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/admin")
 public class AdminController {
 
     private final AdminService adminService;
-
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
-    }
 
     @GetMapping("/users")
     ResponseEntity<List<AdminUserResponse>> getUsers() {

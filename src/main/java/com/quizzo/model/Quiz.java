@@ -3,12 +3,18 @@ package com.quizzo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quizzo.dto.QuizData;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "quizzes")
 public class Quiz {
 
@@ -49,97 +55,6 @@ public class Quiz {
             orphanRemoval = true,
             cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
-
-    public Quiz() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Integer getEliminationsCount() {
-        return eliminationsCount;
-    }
-
-    public void setEliminationsCount(Integer eliminationsCount) {
-        this.eliminationsCount = eliminationsCount;
-    }
-
-    public Boolean getMultipleChoice() {
-        return multipleChoice;
-    }
-
-    public void setMultipleChoice(Boolean multipleChoice) {
-        this.multipleChoice = multipleChoice;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getDurationTime() {
-        return durationTime;
-    }
-
-    public void setDurationTime(Integer durationTime) {
-        this.durationTime = durationTime;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public List<Attempt> getUserAttempts() {
-        return userAttempts;
-    }
-
-    public void setUserAttempts(List<Attempt> userAttempts) {
-        this.userAttempts = userAttempts;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
 
     @Override
     public String toString() {
