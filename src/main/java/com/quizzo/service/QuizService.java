@@ -9,13 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -136,31 +131,35 @@ public class QuizService {
     @Transactional(readOnly = true)
     public QuizSummaryResponse getQuizSummary(String code, Integer userId) {
         Quiz quiz = getSpecificUserQuiz(code, userId);
+        List<Attempt> quizAttempts = attemptRepository.findAllWithUserByQuizId(quiz.getId());
 
-        List<User> users = userRepository.findDistinctByAttemptsOfQuiz(quiz.getId());
+        Map<User, List<Attempt>> attemptsByUser = quizAttempts.stream()
+                .collect(Collectors.groupingBy(
+                        Attempt::getUser,
+                        LinkedHashMap::new,
+                        Collectors.toList())
+                );
 
-        List<UserAttemptsSummaryResponse> userSummaries = users.stream()
-                .map(u -> {
-                    List<UserResultSummaryResponse> attemptResponses = u.getAttempts().stream()
-                            .filter(attempt -> attempt.getQuiz() != null && attempt.getQuiz().getId().equals(quiz.getId()))
-                            .sorted(Comparator.comparing(Attempt::getAttemptTime).reversed())
-                            .map(attempt -> new UserResultSummaryResponse(
-                                    attempt.getScore(),
-                                    attempt.getAttemptTime()
-                            )).toList();
+        List<UserAttemptsSummaryResponse> attemptsSummaries = attemptsByUser.entrySet().stream()
+                .map(entry -> {
+                    List<UserResultSummaryResponse> results = entry.getValue().stream()
+                            .map(a -> new UserResultSummaryResponse(
+                                    a.getScore(),
+                                    a.getAttemptTime()))
+                            .toList();
 
                     return new UserAttemptsSummaryResponse(
-                            u.getLogin(),
-                            u.getEmail(),
-                            attemptResponses);
-                })
-                .toList();
+                            entry.getKey().getLogin(),
+                            entry.getKey().getEmail(),
+                            results
+                    );
+                }).toList();
 
         return new QuizSummaryResponse(
                 quiz.getTitle(),
                 quiz.getCode(),
                 quiz.getMultipleChoice(),
-                userSummaries,
+                attemptsSummaries,
                 quiz.getCreateTime());
     }
 
