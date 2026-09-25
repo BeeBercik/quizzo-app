@@ -19,11 +19,21 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
     Optional<Quiz> findByCode(String code);
 
     @Query("""
-    SELECT new com.quizzo.dto.AdminQuizResponse(q.id, q.title, q.code, COALESCE(o.login, "-"), q.active, q.multipleChoice, SIZE(q.questions), SIZE(q.userAttempts), q.createTime)
-    FROM Quiz q
-    LEFT JOIN q.owner o
-    ORDER BY q.createTime DESC
-""")
-    List<AdminQuizResponse> findAllQuizzesForAdminSortedByCreateTime();
+            SELECT new com.quizzo.dto.AdminQuizResponse(
+                q.id,
+                q.title,
+                q.code,
+                COALESCE(o.login, '-'),
+                q.active,
+                q.multipleChoice,
+                SIZE(q.questions),
+                SIZE(q.userAttempts),
+                q.createTime
+            )
+            FROM Quiz q
+            LEFT JOIN q.owner o
+            ORDER BY q.createTime DESC
+            """)
+    List<AdminQuizResponse> findAllForAdminSortedByCreateTime();
 
 }
