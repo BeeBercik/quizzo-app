@@ -34,10 +34,7 @@ public class AdminService {
 
     @Transactional(readOnly = true)
     public List<AdminQuizResponse> getQuizzes() {
-        return quizRepository.findAll().stream()
-                .sorted(Comparator.comparing(Quiz::getCreateTime).reversed())
-                .map(this::mapQuizToAdminResponse)
-                .toList();
+        return quizRepository.findAllQuizzesForAdminSortedByCreateTime();
     }
 
     @AdminAudit(action = "CHANGE USER ROLE")
@@ -108,22 +105,6 @@ public class AdminService {
                 user.getCreateTime(),
                 user.getAttempts().size(),
                 user.getCreatedQuizzes().size()
-        );
-    }
-
-    private AdminQuizResponse mapQuizToAdminResponse(Quiz quiz) {
-        String ownerLogin = quiz.getOwner() == null ? "-" : quiz.getOwner().getLogin();
-
-        return new AdminQuizResponse(
-                quiz.getId(),
-                quiz.getTitle(),
-                quiz.getCode(),
-                ownerLogin,
-                quiz.getActive(),
-                quiz.getMultipleChoice(),
-                quiz.getQuestions().size(),
-                quiz.getUserAttempts().size(),
-                quiz.getCreateTime()
         );
     }
 }

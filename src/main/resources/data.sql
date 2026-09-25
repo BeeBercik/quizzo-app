@@ -32,12 +32,19 @@ VALUES (
 );
 
 INSERT INTO questions (value, quiz_id)
-VALUES ('What color is elephant?', 1);
+VALUES
+    ('What color is elephant?', 1),
+    ('What is the largest land animal?', 1),
+    ('Which animal says meow?', 1);
 
 INSERT INTO answers (value, correct, question_id)
 VALUES
     ('red', FALSE, 1),
-    ('blue', TRUE, 1);
+    ('blue', TRUE, 1),
+    ('elephant', TRUE, 2),
+    ('giraffe', FALSE, 2),
+    ('cat', TRUE, 3),
+    ('dog', FALSE, 3);
 
 INSERT INTO attempts (user_id, quiz_id, score, attempt_time)
 VALUES (1, 1, 100, TIMESTAMP '2026-01-01 12:00:00');
