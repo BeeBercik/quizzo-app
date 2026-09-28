@@ -16,6 +16,8 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
     boolean existsByCode(String code);
 
     @EntityGraph(attributePaths = "questions")
+    Optional<Quiz> findWithQuestionsByCode(String code);
+
     Optional<Quiz> findByCode(String code);
 
     @Query("""

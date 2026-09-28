@@ -25,7 +25,7 @@ public class QuizService {
 
     @Transactional(readOnly = true)
     public QuizDetailsResponse getQuizByCode(String code) {
-        return mapQuizToDetailsResponse(getQuiz(code), true);
+        return mapQuizToDetailsResponse(getQuizWithQuestions(code), true);
     }
 
     @Transactional(readOnly = true)
@@ -36,7 +36,7 @@ public class QuizService {
 
     @Transactional(readOnly = true)
     public QuizAttemptDetailsResponse getQuizAttemptDetails(String code) {
-        Quiz q = getQuiz(code);
+        Quiz q = getQuizWithQuestions(code);
         return new QuizAttemptDetailsResponse(
                 q.getTitle(),
                 q.getDurationTime(),
@@ -242,7 +242,7 @@ public class QuizService {
                 .orElseThrow(() -> new UnauthorizedException("User not logged in"));
 
         Quiz quiz = getQuiz(code);
-        if (!user.getCreatedQuizzes().contains(quiz))
+        if (quiz.getOwner() == null || !user.getId().equals(quiz.getOwner().getId()))
             throw new IllegalArgumentException("Quiz does not belong to the user");
 
         return quiz;
@@ -271,6 +271,16 @@ public class QuizService {
             return text;
         }
         return text.substring(0, 1).toUpperCase() + text.substring(1);
+    }
+
+    private Quiz getQuizWithQuestions(String code) {
+        Quiz quiz = quizRepository.findWithQuestionsByCode(code.trim().toUpperCase())
+                .orElseThrow(() -> new QuizNotFoundException("Quiz " + code.toUpperCase() + " not found"));
+
+        if (!quiz.getActive())
+            throw new QuizNotActiveException("Quz not active");
+
+        return quiz;
     }
 
     private Quiz getQuiz(String code) {

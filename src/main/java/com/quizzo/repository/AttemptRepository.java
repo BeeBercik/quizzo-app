@@ -3,6 +3,7 @@ package com.quizzo.repository;
 import com.quizzo.model.Attempt;
 import com.quizzo.model.Quiz;
 import com.quizzo.model.User;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 public interface AttemptRepository extends JpaRepository<Attempt, Integer> {
 
+    @EntityGraph(attributePaths = "quiz")
     List<Attempt> findAllByUserOrderByAttemptTimeDesc(User user);
 
     @Query("""
