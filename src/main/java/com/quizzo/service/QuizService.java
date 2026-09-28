@@ -84,11 +84,16 @@ public class QuizService {
             return;
         }
 
+        Map<Integer, Question> questions = questionRepository.findAllByQuizId(quizId).stream()
+                .collect(Collectors.toMap(Question::getId, Function.identity()));
         int goodAnswers = 0;
         for (SubmittedAnswerRequest submittedAnswer : submittedAnswers) {
             Integer questionId = submittedAnswer.questionId();
-
-            List<Answer> answers = questionRepository.findById(questionId).orElseThrow().getAnswers();
+            Question question = questions.get(questionId);
+            if (question == null) {
+                throw new IncorrectQuizDataException("Question not found");
+            }
+            List<Answer> answers = question.getAnswers();
             Set<Integer> selectedAnswerIds = new HashSet<>(submittedAnswer.selectedAnswerIds());
             Set<Integer> correctAnswerIds = answers.stream()
                     .filter(Answer::getCorrect)
